@@ -167,10 +167,7 @@ setTimeout(function(){
     
   }
 }
-const newFeature = function(){
-  console.log('Welcome to new fetures')
-  
-};
+
 
 // controlRecipes();
 const init = function(){
@@ -181,8 +178,6 @@ const init = function(){
   searchView.addHandlerSearch(controlSearchResults);
   paginationView.addHandlerClick(controlPagination);
   addRecipeView.addHandlerUpload(controlAddRecipe);
-  newFeature();
-
 }
 init();
 // window.addEventListener('hashchange', controlRecipes);

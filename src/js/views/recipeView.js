@@ -2,13 +2,8 @@ import View from './View.js';
 
 import icons from 'url:../../img/icons.svg';
 
-// import Fraction from 'fractional';
-// console.log(Fraction)
-
-
 class RecipeView extends View {
 _parentElement = document.querySelector('.recipe');
-
 _errorMessage = 'We could not find recipe. Try another, plz';
 _SuccessMessage = '';
 
@@ -20,12 +15,8 @@ _SuccessMessage = '';
     addHandlerUpdateServings(handler){
       this._parentElement.addEventListener('click', function(e){
         const btn = e.target.closest('.btn--update-servings');
-
         if(!btn) return;
-        console.log(btn);
-
         const {updateTo} = btn.dataset
-
         if(+updateTo > 0) handler(+updateTo);
         
       })
@@ -120,7 +111,6 @@ _SuccessMessage = '';
     }
 
     _generateMarkupIngredient(ingr){
-        // ingr.unit = null ? '' : ingr.unit;
         
         return `
         <li class="recipe__ingredient">
@@ -133,10 +123,9 @@ _SuccessMessage = '';
             ${ingr.description}
           </div>
         </li>`
-        //Если без join(), то оно просто будет списком
       }
     
 };
-//Так мы делаем, чтобы можно было сразу использовать методы и не призначать этот класс переменной
+
 export default new RecipeView();
 

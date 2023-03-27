@@ -8,10 +8,7 @@ _errorMessage = 'There is no recipes found( Try another query';
 _SuccessMessage;
 
 
-//У родителя будет markup, но сам generateMarkup у разных дочерних будет разный
 _generateMarkup(){
-    // console.log(this._data)
-    //Тут join чтобы соеденить их и были слитно
     return this._data.map(result => previewView.render(result, false)).join('')
 }
 

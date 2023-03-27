@@ -26,7 +26,7 @@ class AddRecipeView extends View{
     }
     
     _addHandlerHideWindow(){
-        //Тут я добавил закрывашку на кнопку и отдельно на пространство вокруг формы
+        
         this._btnClose.addEventListener('click', this.toggleWindow.bind(this))
         this._overlay.addEventListener('click', this.toggleWindow.bind(this))
     }

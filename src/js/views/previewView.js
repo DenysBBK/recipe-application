@@ -1,14 +1,11 @@
 import icons from 'url:../../img/icons.svg';
 import View from './View.js';
 
-//Это я сделал из-за того, что для избранного и для таблицы результатов поиска одинаковый НТМЛ идет и по этому
-// два других файла берут этот и берут его generateMarkup
 class PreviewView extends View {
 _parentElement = '';
     
     _generateMarkup(){
         const id = window.location.hash.slice(1);
-
 
         return `
         <li class="preview">

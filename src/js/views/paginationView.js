@@ -5,17 +5,10 @@ class PaginationView extends View{
     _parentElement = document.querySelector('.pagination');
 
     addHandlerClick(handler){
-        //делегирование - мы ставим обработчик на общего предка всех наших элементов с классом btn--inline, который целый елемент
-        //а не спан или иконка, который потом определит на что мы нажали и выполнит функцию для него
         this._parentElement.addEventListener('click', function(e){
             const btn = e.target.closest('.btn--inline');
-            console.log(btn);
-
             if(!btn) return;
-
-            const goToPage = +btn.dataset.goto;
-            // console.log(goToPage)
-            
+            const goToPage = +btn.dataset.goto;            
             handler(goToPage);
             
 
@@ -25,13 +18,9 @@ class PaginationView extends View{
     _generateMarkup(){
         const currentPage = this._data.page
         const numPages = Math.ceil(this._data.results.length / this._data.resultsPerPage);
-        console.log(numPages)
-        
-    
-    //Мы на 1 странице и есть другие страницы
+
         if(currentPage === 1 && numPages > 1){
-            
-            
+             
             return `
         <button data-goto=${currentPage + 1} class="btn--inline pagination__btn--next">
                     <span>Page ${currentPage + 1}</span>
@@ -39,11 +28,9 @@ class PaginationView extends View{
                     <use href="${icons}#icon-arrow-right"></use>
                     </svg>
                 </button>
-        `
-            
+        `  
         }
 
-    //Мы на последней странице
         if(currentPage === numPages && numPages > 1){
            
             return `
@@ -55,7 +42,6 @@ class PaginationView extends View{
                         </button>
             `
         }
-    //Мы на какой-то случайной странице
         if(currentPage < numPages){
             
             return `

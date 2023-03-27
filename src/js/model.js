@@ -26,7 +26,7 @@ const createRecipeObject = function(data){
     servings: recipe.servings,
     cookingTime: recipe.cooking_time,
     ingredients: recipe.ingredients,
-    //Если первого у нас нет, то второе не вернется. Но если первый параметр есть, то второе будет
+
     ...(recipe.key && {key: recipe.key}),
   };
 };
@@ -37,21 +37,15 @@ export const loadRecipe = async function(id){
       const data = await AJAX(`${API_URL}${id}?key=${KEY}`);
 
       state.recipe = createRecipeObject(data)
-    
-    
-     
-      //Если какой-то из рецептов(который добавлен ив избранное) имеет такой же айдишник, что и искомый, то
-      //Ему рецепту ставим тру
+
       if(state.bookmarks.some(bookmark => bookmark.id === id)){
         state.recipe.bookmarked = true;
       }else{
         state.recipe.bookmarked = false;
       };
 
-      // console.log(state.recipe)
     }catch(err){
       console.log(err)
-      
         throw err;
     }
 };
@@ -60,8 +54,7 @@ export const loadSearchResults = async function(query){
   try{
     state.search.query = query
     const data = await AJAX(`${API_URL}?search=${query}&key=${KEY}`);
-    // console.log(data)
-    
+  
     state.search.results = data.data.recipes.map(rec => {
       return {
         id: rec.id,
@@ -81,13 +74,12 @@ export const loadSearchResults = async function(query){
   }
 };
 
-//Это не будет асинхр функция так как на этот момент результаты уже прогружены
 export const getSearchResultsPage = function(page = state.search.page){
 
   state.search.page = page
 
-  const start = (page -1) * state.search.resultsPerPage//0;
-  const end = page * state.search.resultsPerPage //9;
+  const start = (page -1) * state.search.resultsPerPage;
+  const end = page * state.search.resultsPerPage;
 
   return state.search.results.slice(start, end);
 
@@ -96,9 +88,7 @@ export const getSearchResultsPage = function(page = state.search.page){
 export const updateServings = function(newServings){
   state.recipe.ingredients.forEach(ing => {
     ing.quantity = ing.quantity * newServings / state.recipe.servings
-    //new quantity = oldQuant * newServings / oldSevings// 2 * 8 / 4 = 4
   });
-//Мы сначала посчитали со старым кол-вом порций(новый принимаем), а потом установили именно показатель порций на новый
   state.recipe.servings = newServings;
 
 };
@@ -110,21 +100,15 @@ const persistBookmarks = function(){
 export const addBookmark = function(recipe){
   state.bookmarks.push(recipe);
 
-  //делаем рецепт избранным
   if(recipe.id === state.recipe.id) state.recipe.bookmarked = true;
 
   persistBookmarks();
 };
 
 export const deleteBookmark = function(id){
-  //Ищем в массиве елемент(его индекс) с таким же айдишником
   const index = state.bookmarks.findIndex(el => el.id === id)
-  //Берем индекс старта и сколько елементов удалить
   state.bookmarks.splice(index, 1);
-
-  //Делаем не избранным
   if(id === state.recipe.id) state.recipe.bookmarked = false;
-
   persistBookmarks();
 };
 
@@ -137,17 +121,14 @@ init();
 const clearBookmarks = function(){
   localStorage.clear('bookmarks')
 };
-// clearBookmarks();
+
 
 export const uploadRecipe = async function(newRecipe){
   try{
-  
   const ingredients = Object.entries(newRecipe)
   .filter(entry => entry[0].startsWith('ingredient') && entry[1] !== '')
   .map(ing => {
-    // const ingArr = ing[1].replaceAll(' ', '').split(',');
     const ingArr = ing[1].split(',').map(el => el.trim());
-    
     
     if(ingArr.length !== 3) throw new Error('Wrong ingredient format. Use correct format ')
 

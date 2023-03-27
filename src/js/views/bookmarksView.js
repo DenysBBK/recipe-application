@@ -10,12 +10,9 @@ _SuccessMessage ='';
     addHandlerRender(handler){
         window.addEventListener('load', handler)
     }
-
-//У родителя будет markup, но сам generateMarkup у разных дочерних будет разный
     _generateMarkup(){
 
         console.log(this._data)
-        //Тут join чтобы соеденить их и были слитно
         return this._data
         .map(bookmark => previewView.render(bookmark, false))
         .join('')

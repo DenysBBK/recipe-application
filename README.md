@@ -1,3 +1,2 @@
-# forkify Project
-
-Recipe application with custom recipe uploads
+Website link:
+https://denys-app.netlify.app/
